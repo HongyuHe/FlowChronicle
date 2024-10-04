@@ -2,7 +2,6 @@
 programs/
 paper_datasets/
 
-data/*
 logs/*
 models/*
 chunks/*
