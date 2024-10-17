@@ -2,13 +2,31 @@ import os
 import dataloader as dl
 import search
 from temporal_sampling import PatternSampler, FlowSampler
-from experiments.run_chunk import run_chunks
 import argparse
 import time
 import logging
 import warnings
 import pandas as pd
 import concurrent.futures
+
+def run_model_on_chunk_i(chunk, idx, model_name="No_Name"):
+    #We return the index in order to keep the initial ordering at the end
+    return idx, search.search(chunk, model_name=model_name)
+
+def run_chunks(chunks, global_dataset, save_path=None):
+    models=[None] * len(chunks)
+    # Use ProcessPoolExecutor to parallelize the execution
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        # Submit all the tasks to the executor
+        futures = [executor.submit(run_model_on_chunk_i, chunk, i) for i, chunk in enumerate(chunks)]
+        # Collect the results as they are completed
+        for future in concurrent.futures.as_completed(futures):
+            index, model_result = future.result()
+            models[index] = model_result
+            if save_path is not None:
+                model_result.save_model(save_path+f"chunk{index}.pkl")
+    model = ChunkyModel(global_dataset, models)
+    return model
 
 def get_flows(patterns_chunk, col_name_map, columns_value_dict, cont_repr, timestamps, start_id = 0, idxs=None):
     #This function get a list of pattern and sample network flow inside and return a dataset of network flow
@@ -45,7 +63,7 @@ def parrallelize_flows(synthetic_patterns, col_name_map, columns_value_dict, con
 if __name__ == "__main__":
     n_split = 350
     split = n_split > 0
-    save_model = True
+    save_model = False
     
     path = "data/"
 
@@ -59,14 +77,14 @@ if __name__ == "__main__":
     dif1 = divmod(t1-t0,3600)
     print("Preprocessing time: {} hours, {} minutes and {} seconds".format(dif1[0], *divmod(dif1[1],60)))
 
-    m = run_chunks(dataset_chunked, train_dataset, save_path=f"/home/aschoen/my_storage/aschoen/models/{args.experiment}/our_split{n_split}_") if split else search.search(train_dataset, load_checkpoint=0, model_name=f'CIDDS_{args.experiment}_our')
+    m = run_chunks(dataset_chunked, train_dataset, save_path=f"data/chunks/our_split{n_split}_") if split else search.search(train_dataset, load_checkpoint=0, model_name=f'CIDDS_{args.experiment}_our')
 
     t2 = time.time()
     dif2 = divmod(t2-t1,3600)
     print("Training time: {} hours, {} minutes and {} seconds".format(dif2[0], *divmod(dif2[1],60)))
 
     if save_model:
-        m.save_model(f"/home/aschoen/my_storage/aschoen/models/{args.experiment}/CIDDS_{args.experiment}_split{n_split}-our.pkl")
+        m.save_model(f"models/CIDDS-our.pkl")
 
     c = m.cover
     cover_stats = c.get_cover_stats()
@@ -84,4 +102,4 @@ if __name__ == "__main__":
     dif3 = divmod(t3-t2,3600)
     print("Sampling time: {} hours, {} minutes and {} seconds".format(dif3[0], *divmod(dif3[1],60)))
 
-    synthetic_df.to_csv(path+f"our_syn.csv", index=False)
+    synthetic_df.to_csv(path+"our_new_syn.csv", index=False)
