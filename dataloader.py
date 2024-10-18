@@ -6,7 +6,7 @@ import pandas.api.types as ptypes
 from bidict import bidict
 from copy import deepcopy
 import domain_knowledge
-from preprocess import optimize_gmm, bytes_to_int, discretize_bytes, time_to_int
+from preprocess import optimize_gmm, bytes_to_int, time_to_int
 from sklearn.mixture import GaussianMixture
 
 
@@ -345,12 +345,3 @@ def get_CIDDS_cont_repr(data, dic, precition=100) -> ContinousRepr:
     return cont_rept
 
 
-
-def load_socbed_uni(sample_size=None, precition=1000):
-    raise NotImplementedError
-    df = pd.read_csv('data/test_bed_data/socbed-uni.txt')
-    df= df.head(sample_size) if sample_size is not None else df
-    df['Bytes'] = bytes_to_int(df['Bytes'])
-    df = discretize_bytes(df, 'Bytes')
-    df['Date first seen'] = time_to_int(df['Date first seen'],precition=precition)
-    return df

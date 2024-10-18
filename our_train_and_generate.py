@@ -1,13 +1,15 @@
 import os
-import dataloader as dl
 import search
-from temporal_sampling import PatternSampler, FlowSampler
 import argparse
 import time
 import logging
 import warnings
 import pandas as pd
 import concurrent.futures
+
+import dataloader as dl
+from temporal_sampling import PatternSampler, FlowSampler
+from model import ChunkyModel
 
 def run_model_on_chunk_i(chunk, idx, model_name="No_Name"):
     #We return the index in order to keep the initial ordering at the end
