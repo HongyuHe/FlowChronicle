@@ -56,10 +56,9 @@ def parrallelize_flows(synthetic_patterns, col_name_map, columns_value_dict, con
     #Parralelization of the sampling
     with concurrent.futures.ProcessPoolExecutor(max_workers=int(cpus)) as executor:
         futures = [executor.submit(get_flows, chunk, col_name_map, columns_value_dict, cont_repr, timestamps, i*chunk_size, idxs) for i, chunk in enumerate(chunks)]
-        for future in concurrent.futures.as_completed(futures):
+        for future in enumerate(concurrent.futures.as_completed(futures)):
             result = future.result()
             synthetic_flows.append(result)
-            logging.info(f"Completed processing chunk {chunk_id + 1}/{len(chunks)}")
     return pd.concat(synthetic_flows, axis=0)
 
 if __name__ == "__main__":
