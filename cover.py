@@ -53,8 +53,8 @@ class Cover:
     def greedy_search(self):
         assert not self.empty_pattern_added
         # its here so that it only shows up once!
-        warnings.warn("Using np.all to find next window - probably inefficient")
-        warnings.warn("Window.score: Using simple number of fields covered as score")
+        # warnings.warn("Using np.all to find next window - probably inefficient")
+        # warnings.warn("Window.score: Using simple number of fields covered as score")
 
         self.__cache_data_length_cost = None
 
