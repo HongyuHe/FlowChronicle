@@ -1,27 +1,35 @@
-# syntax=docker/dockerfile:1
-# https://docs.docker.com/develop/develop-images/multistage-build/
+FROM python:3.10
 
+RUN apt-get update && apt-get install -y \
+    gdal-bin \
+    libgdal-dev \
+    build-essential \
+    python3-dev \
+    libhdf5-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    pkg-config \
+    libvirt-dev \
+    libffi-dev \
+    libssl-dev \
+    graphviz-dev \
+    libcairo2-dev \
+    libgirepository1.0-dev \
+    && apt-get clean
 
-FROM continuumio/anaconda3:latest@sha256:8115a7841dc0f82e0a9c2d156239164c86f0b85c071d4dc8d957bd8f3d24e024
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
 
-RUN apt update || true
-RUN apt install -y gcc || true
-RUN apt install -y gdb || true
-RUN apt install -y nano htop wget tmux r-base || true 
+WORKDIR /app
 
-RUN conda run -n base pip install scikit-mine || true
+RUN pip install --upgrade pip setuptools
 
-RUN conda install -c conda-forge ipympl || true
-RUN conda install -c conda-forge eigen  || true
-RUN conda install -c conda-forge pgmpy
+RUN pip install --no-cache-dir numpy
 
-RUN conda run -n base pip install saxpy || true
-RUN conda run -n base pip install pybind11 || true
-RUN conda run -n base pip install prettytable || true
-RUN conda run -n base pip install wfdb || true
-RUN conda run -n base pip install editdistance || true
-RUN conda run -n base pip install bidict || true
-RUN conda run -n base pip install pyinform || true
-RUN conda run -n base pip install nptyping || true
-RUN conda run -n base pip install opt-einsum
-RUN conda run -n base pip install scikit-learn
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["bash"]
