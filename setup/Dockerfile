@@ -26,10 +26,20 @@ RUN pip install --upgrade pip setuptools
 
 RUN pip install --no-cache-dir numpy
 
-COPY requirements.txt .
+COPY setup/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY ../our_train_and_generate.py /app/
+COPY ../experiments.ipynb /app/
+COPY ../load_model.py /app/
+
+COPY ../data /app/data
+COPY ../models /app/models
+COPY ../programs /app/programs
+
+ENV PYTHONPATH="/app/programs"
+
+EXPOSE 8888
 
 CMD ["bash"]

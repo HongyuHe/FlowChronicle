@@ -7,9 +7,9 @@ import warnings
 import pandas as pd
 import concurrent.futures
 
-import dataloader as dl
-from temporal_sampling import PatternSampler, FlowSampler
-from model import ChunkyModel
+import programs.dataloader as dl
+from programs.temporal_sampling import PatternSampler, FlowSampler
+from programs.model import ChunkyModel
 
 def run_model_on_chunk_i(chunk, idx, model_name="No_Name"):
     #We return the index in order to keep the initial ordering at the end
@@ -64,7 +64,7 @@ def parrallelize_flows(synthetic_patterns, col_name_map, columns_value_dict, con
 if __name__ == "__main__":
     n_split = 350
     split = n_split > 0
-    save_model = False
+    save_model = True
     
     path = "data/"
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     print("Training time: {} hours, {} minutes and {} seconds".format(dif2[0], *divmod(dif2[1],60)))
 
     if save_model:
-        m.save_model(f"models/CIDDS-our.pkl")
+        m.save_model("models/artifact_evaluation.pkl")
 
     c = m.cover
     cover_stats = c.get_cover_stats()
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     dif3 = divmod(t3-t2,3600)
     print("Sampling time: {} hours, {} minutes and {} seconds".format(dif3[0], *divmod(dif3[1],60)))
 
-    synthetic_df.to_csv(path+"our_new_syn.csv", index=False)
+    synthetic_df.to_csv(path+"artifact_evaluation_syn.csv", index=False)
