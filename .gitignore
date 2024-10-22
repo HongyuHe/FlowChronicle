@@ -1,6 +1,7 @@
 data/*.csv
 logs/*
 models/*
+!models/.gitkeep
 chunks/*
 !chunks/.gitkeep
 
