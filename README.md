@@ -45,7 +45,7 @@ python3 our_train_and_generate.py
 ### (Alternatively 1: Use our FlowChronicle model to generate new network flows)
 Training a new model from scratch can be really long and computationally intensive. If you just want to generate new data from an already preexisting model, do:
 ```
-python3 load_model.py
+python3 generate_from_model.py
 ```
 ### (Alternatively 2: Use our generated data)
 If you can neither train nor generate new data, you can still inspect the data that we generate ourselves.
