@@ -102,7 +102,7 @@ if __name__ == "__main__":
     c.fit_temporal_samplers(patterns_usage.keys())
     idx, synthetic_patterns = PatternSampler(patterns_usage).sample(sum(patterns_usage.values()), return_indices=True)
     
-    synthetic_df = parrallelize_flows(synthetic_patterns, c.dataset.col_name_map, c.dataset.columns_value_dict, c.dataset.cont_repr, c.dataset.time_stamps, idxs=idx)
+    synthetic_df = parrallelize_flows(synthetic_patterns, c.dataset.col_name_map, c.dataset.column_value_dict, c.dataset.cont_repr, c.dataset.time_stamps, idxs=idx)
     synthetic_df = synthetic_df.sort_values('Date first seen')
 
     synthetic_df.insert(0, 'Date first seen', synthetic_df.pop('Date first seen'))
