@@ -62,6 +62,14 @@ def parrallelize_flows(synthetic_patterns, col_name_map, columns_value_dict, con
     return pd.concat(synthetic_flows, axis=0)
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Train and generate synthetic network traffic.')
+    parser.add_argument('--n_split', type=int, default=350, help='Number of splits for the dataset.')
+    parser.add_argument('--save_model', action='store_true', help='Flag to save the model.')
+    parser.add_argument('--path', type=str, default="data/", help='Path to the dataset and output files.')
+    
+    args = parser.parse_args()
+
     n_split = 350
     split = n_split > 0
     save_model = True

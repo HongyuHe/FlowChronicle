@@ -477,7 +477,6 @@ def LSTM_discrete_dataset(train, generated, test, num_epochs=7, batch_size=4, se
     df = pd.concat([df,df],axis=1)
     df.columns = ["orig","combined"]
     label_encoder.fit(df['combined']) #fit on all possible values
-    print(len(label_encoder.classes_))
 
     real_encoded = encode_series(df.iloc[:len(train),-1],label_encoder)
     real_loader = create_dataloader(real_encoded)
@@ -511,6 +510,7 @@ def LSTM_discrete_dataset(train, generated, test, num_epochs=7, batch_size=4, se
         score = model.evaluate_model(generated_loader)
     
     if tstr:
+        print(f"Doing the LSTM comparison. LSTM parameters: hidden_dim - {hidden_dim}; seq_len - {seq_len}")
         model.train_model(real_loader, num_epochs)
     
         score_r = model.evaluate_model(ts_loader)
@@ -525,7 +525,7 @@ def LSTM_discrete_dataset(train, generated, test, num_epochs=7, batch_size=4, se
 
 if __name__ == '__main__':
     path = "../data/"
-
+    print("Loading dataframes")
     train = pd.read_csv(path+"train.csv")
     test = pd.read_csv(path+"test.csv")
     test["Date first seen"] = pd.to_datetime(test["Date first seen"])-pd.to_timedelta(7*3600*24,unit="s")
@@ -554,7 +554,7 @@ if __name__ == '__main__':
         datasets[i]["Proto"] = datasets[i]["Proto"].str.strip()
         datasets[i].index=datasets[i].pop("Date first seen")
         datasets[i] = datasets[i][discrete_1].astype(str)
-    
+    print("Finished loading dataframes")
     score_tstr = np.zeros((len(models),len(discrete_1), 9))
 
     real = datasets.pop(0)
