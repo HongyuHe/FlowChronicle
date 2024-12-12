@@ -138,9 +138,10 @@ def reconstruct_bytes(col, dic, v2=True):
 
 def load_CIDDS_dataset(path):
 
-    df = pd.read_csv(path)
+    df = pd.read_csv(path)#.sample(n=10_000).reset_index(drop=True)
     train = preprocess_CIDDS_dataset(df)
-    train_d, discrete_dic = discretize(train)
+    # train_d, discrete_dic = discretize(train)
+    train_d, discrete_dic = discretize_cidds(train)
 
     dataset = Dataset(train_d.copy())
     dataset.cont_repr = get_CIDDS_cont_repr(train, discrete_dic)
@@ -179,7 +180,7 @@ def load_train_set(sample_size=None):
     df = pd.read_csv('data/train.csv')
     df= df.head(sample_size) if sample_size is not None else df
 
-    df.sort_values(by=['Day', 'Time'], inplace=True)
+    # df.sort_values(by=['Day', 'Time'], inplace=True)
 
     return df
 
@@ -250,6 +251,13 @@ def parse_tcp_flags(tcp_flag_str):
 
 def preprocess_CIDDS_dataset(data):
     df= data.copy()
+    # continuous = ['In Byte', 'Out Byte', 'In Packet', 'Out Packet', 'Duration']
+    continuous = ["Bytes", "Packets", "Duration"]
+    discrete = ['Proto', 'Src IP Addr', 'Dst IP Addr', 'Dst Pt', 'Flags']
+    df["Date first seen"] = pd.to_numeric(pd.to_datetime(df['Date first seen']))
+    df[continuous] = df[continuous].astype(float)
+    df["Proto"] = df["Proto"].str.strip()
+    # df = df[train.columns]
 
     df['Date first seen'] = pd.to_datetime(df['Date first seen'])
 
@@ -270,10 +278,12 @@ def preprocess_CIDDS_dataset(data):
     df['Dst Pt'] = df['Dst Pt'].astype(float)
     df['Duration'] = df['Duration'].astype(float)
 
-    df['In Byte'] = df['In Byte'].astype(int)
-    df['In Packet'] = df['In Packet'].astype(int)
-    df['Out Byte'] = df['Out Byte'].astype(int)
-    df['Out Packet'] = df['Out Packet'].astype(int)
+    df['Bytes'] = df['Bytes'].astype(int)
+    # df['In Byte'] = df['In Byte'].astype(int)
+    df['Packets'] = df['Packets'].astype(int)
+    # df['In Packet'] = df['In Packet'].astype(int)
+    # df['Out Byte'] = df['Out Byte'].astype(int)
+    # df['Out Packet'] = df['Out Packet'].astype(int)
 
     #df["From Ext."] = df["Src IP Addr"].str.contains("_")
 
@@ -327,6 +337,27 @@ def discretize(df, n_components_range=[1,100], optimize=False, transform_timesta
             j = j.replace(d.inverse).astype(int)
             data[col] = j
             dic[col] = d
+    if transform_timestamps:
+        data['Date first seen'] = time_to_int(df['Date first seen'], 100)
+
+    return data, dic
+
+def discretize_cidds(df, n_components_range=[1,100], optimize=False, transform_timestamps=True, v2=True):
+    data = df.copy()
+
+    continuous = data.loc[:,["Bytes", "Packets", "Duration"]]
+    dic = {}
+    for col in continuous.columns:
+        c = continuous[col]
+        j = c.copy()
+        c = c[c!=0]
+        c = pd.qcut(c, 40, duplicates="drop")
+        j.loc[j!=0] = c
+        d = bidict(zip(list(range(1,c.nunique()+1)), c.cat.categories))
+        d[0] = 0
+        j = j.replace(d.inverse).astype(int)
+        data[col] = j
+        dic[col] = d
     if transform_timestamps:
         data['Date first seen'] = time_to_int(df['Date first seen'], 100)
 

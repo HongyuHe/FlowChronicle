@@ -27,6 +27,10 @@ class Window:
     def __le__(self, other:Window):
         return self.score() <= other.score()
 
+    def __str__(self):
+        return f"Window: {self.ids}, score {self.score()}"
+    def __repr__(self):
+        return self.__str__()
 
     def score(self) -> float:
         epsilon = 0.01 #when same number of windows covered prefer the ones with fewer gaps

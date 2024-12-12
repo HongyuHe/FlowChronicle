@@ -58,6 +58,7 @@ class RowPattern: # describing a subset of the attributes of a row / flow
             if val.attr_type != AttributeType.SET_PLACEHOLDER:
                 columns.append(col)
                 val_vector.append(val.value)
+        #* This tests if all columns in the pattern match the values in the row
         mask = np.all(dataset.flow_features[columns] == val_vector, axis=1)
         return  mask #list(dataset.flow_features.index[mask])
 

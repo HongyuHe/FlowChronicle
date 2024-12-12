@@ -13,6 +13,7 @@ import warnings
 import copy
 import pandas as pd
 import numpy as np
+from rich import print as pprint
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -29,7 +30,7 @@ class Pattern: # sequence of RowPatterns
         return self.__repr__()
 
     def __repr__(self):
-        return str(list(map(str, self.pattern))) + str(hash(self))
+        return str(list(map(str, self.pattern))) + '-' + str(hash(self))
 
     def __hash__(self) -> int:
         return hash(tuple(self.pattern))
@@ -41,6 +42,9 @@ class Pattern: # sequence of RowPatterns
         return str_rep
 
     def __complete_window(self, start_position:int, set_vars:dict, dataset:Dataset) -> Optional[window.Window]:
+        '''
+        Find all rows that match the pattern starting at start_position
+        '''
         ids = [start_position]
         all_false_mask = pd.Series(False, index=dataset.flow_features.index)
 
@@ -59,15 +63,18 @@ class Pattern: # sequence of RowPatterns
     def find_windows(self, dataset:Dataset) -> list[window.Window]:
         if self.__window_cache != None:
             return self.__window_cache
-        logging.debug("Find windows for pattern %s" % self)
+        # logging.debug("Find windows for pattern %s" % self)
         windows = []
         firstrow = self.pattern[0]
+        #* Find all rows that match the first row pattern
         start_positions = firstrow.matching_rows(dataset)
         var_sets = firstrow.init_vars(start_positions,dataset)
         for i, set_vars in zip(dataset.flow_features.index[start_positions],var_sets):
+            #* For each row that matches the first row pattern, find all rows that match the pattern
             opt_window = self.__complete_window(i,set_vars, dataset)
             if opt_window != None:
                 windows.append(opt_window)
+        # pprint(windows)
         self.__window_cache = windows
         return windows
 

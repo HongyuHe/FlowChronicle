@@ -4,6 +4,9 @@ import pandas as pd
 import numpy as np
 import copy
 from itertools import product, combinations
+from rich import print as pprint
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -25,6 +28,10 @@ def extend_row(row_pattern:Optional[RowPattern], dataset:Dataset, ignore_columns
     Also works with None, returns all possible single attribute rows
     Returns empty list if no extension possible
     '''
+    #* This returns all possible extensions of a row pattern with all possible values of an unset column.
+    #* For example, if the row pattern is {0: AttributeValue(FIX, 0), 1: AttributeValue(FIX, 1)}, 
+    #* and the dataset has 3 columns, then this function will return all possible extensions of the row pattern 
+    #* with all possible values of the 3rd column.
     pattern_dict = row_pattern.pattern if row_pattern != None else {}
     set_columns = pattern_dict.keys()
     unset_columns = set(range(dataset.shape[1])) - set_columns
@@ -150,8 +157,9 @@ def build_inital_patterns(dataset:Dataset) -> list[Pattern]:
     '''
     single_attribute_rows = extend_row(None, dataset)
     pair_attribute_rows = []
+    #* Below loop is to get all possible combinations of 2 attributes by extending the single attribute rows with one more attribute.
     for row in single_attribute_rows:
-        pair_attribute_rows = pair_attribute_rows + extend_row(row, dataset, ignore_columns=set(range(next(iter(row.pattern.keys()))))) #ignore all larger columns
+        pair_attribute_rows += extend_row(row, dataset, ignore_columns=set(range(next(iter(row.pattern.keys()))))) #ignore all later columns
 
     return list(map(lambda x: Pattern([x]), pair_attribute_rows)) #TODO list best type for this?
 
@@ -220,7 +228,8 @@ def search(dataset:Dataset, load_checkpoint=0, model_name='model', load_path=Non
 
         candidates = np.array(candidates)
         candidate_scores = list(map(lambda x: x.get_candidate_score(dataset, candidate_score_cache), candidates))
-
+        # pprint(candidates)
+        # pprint(candidate_scores)
 
 
         unseccessful_candidates = 0
@@ -244,9 +253,14 @@ def search(dataset:Dataset, load_checkpoint=0, model_name='model', load_path=Non
 
 
 if __name__ == '__main__':
-    df = dl.load_socbed_bi()
-    dataset = Dataset(df.copy())
+    # df = dl.load_socbed_bi()
+    # dataset = Dataset(df.copy())
+    dataset = dl.load_CIDDS_dataset('data/wk3cidds_5k.csv')
     m = search(dataset)
     for p in m.get_patterns():
-        print(p)
-    pickle.dump(m, open('model.pkl', 'wb'))
+        pprint(p)
+    pattern_strings = [str(p) for p in m.get_patterns()]
+    #* Save patterns to json file
+    with open('results/patterns_5k.json', 'w') as f:
+        f.write('\n'.join(pattern_strings))
+    pickle.dump(m, open('models/model_5k.pkl', 'wb'))
