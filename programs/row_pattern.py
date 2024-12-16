@@ -30,8 +30,8 @@ class RowPattern: # describing a subset of the attributes of a row / flow
     def __repr__(self):
         return str(sorted(list(self.pattern.items()), key=lambda x: x[0]))
 
-    def get_real_value_repr(self, dataset:Dataset) -> str:
-        return str({dataset.col_name_map[x]:y.get_real_value_repr(x,dataset) for x,y in self.pattern.items()})
+    def get_real_value_repr(self, dataset:Dataset) -> dict:
+        return {dataset.col_name_map[x]: str(y.get_real_value_repr(x,dataset)) for x,y in self.pattern.items()}
 
     def get_n_coverd_fields(self) -> int:
         return len(self.pattern) - self.type_counts[AttributeType.SET_PLACEHOLDER]

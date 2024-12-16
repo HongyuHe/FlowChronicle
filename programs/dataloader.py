@@ -107,7 +107,6 @@ class Dataset:
     def load_model(filename) -> 'Dataset':
         return pickle.load(open(filename, 'rb'))
 
-
 def reconstruct_bytes(col, dic, v2=True):
     if not v2:
         ser = col.astype(float)

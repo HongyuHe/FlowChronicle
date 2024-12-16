@@ -20,6 +20,7 @@ from dataloader import Dataset
 from attribute_value import AttributeValue, AttributeType
 import our_globals
 
+from time import perf_counter
 
 
 def extend_row(row_pattern:Optional[RowPattern], dataset:Dataset, ignore_columns = set()) -> list[RowPattern]:
@@ -256,7 +257,10 @@ if __name__ == '__main__':
     # df = dl.load_socbed_bi()
     # dataset = Dataset(df.copy())
     dataset = dl.load_CIDDS_dataset('data/wk3cidds_5k.csv')
+    start = perf_counter()
     m = search(dataset)
+    end = perf_counter()
+    print("Time taken: ", end-start, "s")
     for p in m.get_patterns():
         pprint(p)
     pattern_strings = [str(p) for p in m.get_patterns()]

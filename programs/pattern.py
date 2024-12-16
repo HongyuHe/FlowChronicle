@@ -35,11 +35,11 @@ class Pattern: # sequence of RowPatterns
     def __hash__(self) -> int:
         return hash(tuple(self.pattern))
 
-    def get_real_value_repr(self, dataset:Dataset) -> str:
-        str_rep = ""
-        for row in map(lambda x: x.get_real_value_repr(dataset), self.pattern):
-            str_rep += row + "\n"
-        return str_rep
+    def get_real_value_repr(self, dataset:Dataset) -> list[dict]:
+        row_patterns = [row.get_real_value_repr(dataset) for row in self.pattern]   
+        # for row in map(lambda x: x.get_real_value_repr(dataset), self.pattern):
+        #     str_rep += row + "\n"
+        return row_patterns
 
     def __complete_window(self, start_position:int, set_vars:dict, dataset:Dataset) -> Optional[window.Window]:
         '''

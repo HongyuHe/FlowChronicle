@@ -1,0 +1,429 @@
+{
+    "0": [
+        {
+            "Proto": "TCP",
+            "Src Pt": "443",
+            "Flows": "1",
+            "Packets": "1",
+            "Duration": "0",
+            "Flags": ".A....",
+            "Bytes": "2",
+            "Dst IP Addr": "192.168.210.5"
+        }
+    ],
+    "1": [
+        {
+            "Dst Pt": "80.0",
+            "Packets": "1",
+            "Proto": "TCP",
+            "Flows": "1",
+            "Duration": "0",
+            "Bytes": "1",
+            "Src IP Addr": "192.168.220.7",
+            "Src Pt": "50026",
+            "Dst IP Addr": "10288_91",
+            "Flags": ".A...F"
+        }
+    ],
+    "2": [
+        {
+            "Bytes": "1",
+            "Flags": ".A....",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Src Pt": "80",
+            "Packets": "1",
+            "Flows": "1"
+        }
+    ],
+    "3": [
+        {
+            "Dst Pt": "443.0",
+            "Packets": "1",
+            "Proto": "TCP",
+            "Flows": "1",
+            "Duration": "0",
+            "Flags": ".A....",
+            "Bytes": "2",
+            "Src IP Addr": "SET_PLACEHOLDER1",
+            "Dst IP Addr": "SET_PLACEHOLDER3"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Proto": "TCP",
+            "Flows": "1",
+            "Src Pt": "80",
+            "Packets": "1"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER3",
+            "Proto": "UDP",
+            "Src IP Addr": "DNS",
+            "Src Pt": "53",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": "......"
+        }
+    ],
+    "4": [
+        {
+            "Src Pt": "80",
+            "Flags": ".A....",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Src IP Addr": "10077_154",
+            "Dst IP Addr": "192.168.220.7",
+            "Dst Pt": "36561.0",
+            "Packets": "1",
+            "Bytes": "5",
+            "Flows": "1"
+        }
+    ],
+    "5": [
+        {
+            "Proto": "UDP",
+            "Dst Pt": "53.0",
+            "Dst IP Addr": "DNS",
+            "Flows": "1",
+            "Flags": "......",
+            "Src IP Addr": "SET_PLACEHOLDER0",
+            "Packets": "1",
+            "Duration": "0"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Flows": "1",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Duration": "0",
+            "Flags": ".AP...",
+            "Dst IP Addr": "SET_PLACEHOLDER1",
+            "Src Pt": "445"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Packets": "1",
+            "Flows": "1"
+        }
+    ],
+    "6": [
+        {
+            "Dst Pt": "53.0",
+            "Flags": "......",
+            "Proto": "UDP",
+            "Dst IP Addr": "DNS",
+            "Flows": "1",
+            "Src IP Addr": "SET_PLACEHOLDER0",
+            "Packets": "1"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Flows": "1",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Duration": "0",
+            "Flags": ".AP..."
+        }
+    ],
+    "7": [
+        {
+            "Duration": "0",
+            "Flags": ".AP...",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Src Pt": "445",
+            "Src IP Addr": "192.168.100.5"
+        }
+    ],
+    "8": [
+        {
+            "Dst Pt": "53.0",
+            "Packets": "1",
+            "Proto": "UDP",
+            "Dst IP Addr": "DNS",
+            "Flows": "1",
+            "Flags": "......",
+            "Duration": "0",
+            "Bytes": "4"
+        }
+    ],
+    "9": [
+        {
+            "Dst Pt": "80.0",
+            "Bytes": "2",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": ".A....",
+            "Src IP Addr": "SET_PLACEHOLDER1"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Flows": "1",
+            "Duration": "0",
+            "Packets": "1",
+            "Src Pt": "80",
+            "Proto": "TCP",
+            "Bytes": "2",
+            "Flags": ".A...."
+        }
+    ],
+    "10": [
+        {
+            "Dst Pt": "443.0",
+            "Bytes": "2",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Src IP Addr": "SET_PLACEHOLDER1",
+            "Flags": ".A...."
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Flows": "1",
+            "Packets": "1",
+            "Duration": "0"
+        }
+    ],
+    "11": [
+        {
+            "Src Pt": "443",
+            "Flags": ".AP.S.",
+            "Proto": "TCP",
+            "Flows": "1",
+            "Src IP Addr": "SET_PLACEHOLDER0"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Flows": "1",
+            "Packets": "1",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Flags": ".A....",
+            "Dst Pt": "80.0"
+        }
+    ],
+    "12": [
+        {
+            "Duration": "0",
+            "Dst Pt": "53.0",
+            "Proto": "UDP",
+            "Dst IP Addr": "DNS",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": "......",
+            "Bytes": "5"
+        }
+    ],
+    "13": [
+        {
+            "Duration": "0",
+            "Src Pt": "53",
+            "Proto": "UDP",
+            "Src IP Addr": "DNS",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": "......",
+            "Dst IP Addr": "SET_PLACEHOLDER0"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER0",
+            "Proto": "TCP",
+            "Src Pt": "80",
+            "Flows": "1"
+        }
+    ],
+    "14": [
+        {
+            "Flows": "1",
+            "Flags": ".AP..F",
+            "Proto": "TCP",
+            "Src IP Addr": "SET_PLACEHOLDER1"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Flows": "1",
+            "Duration": "0",
+            "Packets": "1",
+            "Src Pt": "80",
+            "Proto": "TCP"
+        }
+    ],
+    "15": [
+        {
+            "Bytes": "11",
+            "Flows": "1",
+            "Packets": "1",
+            "Proto": "TCP",
+            "Flags": ".AP...",
+            "Dst Pt": "445.0",
+            "Dst IP Addr": "192.168.100.5",
+            "Src IP Addr": "SET_PLACEHOLDER0"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Flows": "1",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Dst IP Addr": "SET_PLACEHOLDER1"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1",
+            "Proto": "TCP",
+            "Flows": "1"
+        }
+    ],
+    "16": [
+        {
+            "Packets": "1",
+            "Bytes": "11",
+            "Flows": "1",
+            "Proto": "TCP",
+            "Flags": ".AP...",
+            "Dst Pt": "445.0",
+            "Dst IP Addr": "192.168.100.5",
+            "Src IP Addr": "SET_PLACEHOLDER0"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Flows": "1",
+            "Duration": "0",
+            "Packets": "1"
+        }
+    ],
+    "17": [
+        {
+            "Dst Pt": "443.0",
+            "Flags": ".AP.S.",
+            "Proto": "TCP",
+            "Flows": "1",
+            "Packets": "7"
+        }
+    ],
+    "18": [
+        {
+            "Duration": "0",
+            "Bytes": "6",
+            "Proto": "UDP",
+            "Src IP Addr": "DNS",
+            "Src Pt": "53",
+            "Dst IP Addr": "192.168.200.9",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": "......"
+        }
+    ],
+    "19": [
+        {
+            "Proto": "TCP",
+            "Bytes": "11",
+            "Flows": "1",
+            "Packets": "1",
+            "Flags": ".AP..."
+        }
+    ],
+    "20": [
+        {
+            "Dst Pt": "80.0",
+            "Bytes": "1",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": ".A...."
+        }
+    ],
+    "21": [
+        {
+            "Dst Pt": "80.0",
+            "Bytes": "1",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": ".A....",
+            "Src IP Addr": "SET_PLACEHOLDER1"
+        },
+        {
+            "Dst IP Addr": "USE_PLACEHOLDER1"
+        }
+    ],
+    "22": [
+        {
+            "Packets": "3",
+            "Flows": "1",
+            "Proto": "TCP"
+        }
+    ],
+    "23": [
+        {
+            "Duration": "0",
+            "Bytes": "5",
+            "Proto": "UDP",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": "......",
+            "Src Pt": "137",
+            "Dst Pt": "137.0"
+        }
+    ],
+    "24": [
+        {
+            "Src Pt": "80",
+            "Flags": ".A...F",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Duration": "0"
+        }
+    ],
+    "25": [
+        {
+            "Packets": "1",
+            "Bytes": "5",
+            "Duration": "0",
+            "Proto": "UDP",
+            "Flows": "1",
+            "Flags": "......"
+        }
+    ],
+    "26": [
+        {
+            "Bytes": "7",
+            "Flags": ".A...F",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Src IP Addr": "SET_PLACEHOLDER0"
+        },
+        {
+            "Src IP Addr": "USE_PLACEHOLDER0",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Bytes": "2",
+            "Flows": "1",
+            "Flags": ".A...."
+        }
+    ],
+    "27": [
+        {
+            "Duration": "0",
+            "Src Pt": "445"
+        }
+    ],
+    "28": [
+        {
+            "Dst Pt": "443.0",
+            "Bytes": "1",
+            "Duration": "0",
+            "Proto": "TCP",
+            "Packets": "1",
+            "Flows": "1",
+            "Flags": ".A...."
+        }
+    ]
+}
