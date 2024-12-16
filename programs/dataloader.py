@@ -73,6 +73,8 @@ class Dataset:
         self.column_value_dict = {}
         self.column_value_dict_str = {}
         for col in self.__dataset.columns[1:]:
+            #* Map the domain (unique values) of the column to integers
+            #* e.g., {0: 'TCP', 1: 'UDP', 2: 'IGMP', 3: 'ICMP'}.
             value_int_map = bidict(enumerate(pd.unique(self.__dataset[col])))
             value_int_map_str = bidict(enumerate(list(map(str,pd.unique(self.__dataset[col])))))
             self.column_value_dict[col] = value_int_map
