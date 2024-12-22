@@ -9,6 +9,7 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+import sys
 
 import pickle
 
@@ -256,7 +257,8 @@ def search(dataset:Dataset, load_checkpoint=0, model_name='model', load_path=Non
 if __name__ == '__main__':
     # df = dl.load_socbed_bi()
     # dataset = Dataset(df.copy())
-    dataset = dl.load_CIDDS_dataset('data/wk3cidds_5k.csv')
+    label = sys.argv[1] if sys.argv[1] else '5k'
+    dataset = dl.load_CIDDS_dataset(f'data/wk3cidds_{label}.csv')
     start = perf_counter()
     m = search(dataset)
     end = perf_counter()
@@ -265,6 +267,6 @@ if __name__ == '__main__':
         pprint(p)
     pattern_strings = [str(p) for p in m.get_patterns()]
     #* Save patterns to json file
-    with open('results/patterns_5k.json', 'w') as f:
+    with open(f'results/patterns_{label}.json', 'w') as f:
         f.write('\n'.join(pattern_strings))
-    pickle.dump(m, open('models/model_5k.pkl', 'wb'))
+    pickle.dump(m, open(f'models/model_{label}.pkl', 'wb'))
