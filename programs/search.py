@@ -257,8 +257,8 @@ def search(dataset:Dataset, load_checkpoint=0, model_name='model', load_path=Non
 if __name__ == '__main__':
     # df = dl.load_socbed_bi()
     # dataset = Dataset(df.copy())
-    label = sys.argv[1] if sys.argv[1] else '5k'
-    dataset = dl.load_CIDDS_dataset(f'data/wk3cidds_{label}.csv')
+    label = sys.argv[1] if sys.argv[1] else '8k'
+    dataset = dl.load_CIDDS_dataset(f'data/cidds_wk3_{label}.csv')
     start = perf_counter()
     m = search(dataset)
     end = perf_counter()
